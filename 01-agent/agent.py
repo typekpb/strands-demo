@@ -31,7 +31,7 @@ agent = Agent(
 
 # Ask the agent a question that uses the available tools
 message = """
-I have 4 requests:
+I have 3 requests:
 
 1. What is the time right now?
 2. Calculate 3111696 / 74088
