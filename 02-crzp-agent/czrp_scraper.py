@@ -29,7 +29,8 @@ async def thesis_fetch(search_term: str) -> str:
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(
-            headless=False,
+            headless=True,
+            # headless=False,
             args=["--no-sandbox"]
         )
         page = await browser.new_page()
@@ -83,7 +84,8 @@ async def thesis_abstract_fetch(detail_link: str) -> str:
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(
-            headless=False,
+            headless=True,
+            # headless=False,
             args=["--no-sandbox"]
         )
         page = await browser.new_page()
@@ -127,7 +129,8 @@ async def thesis_retrieve_pdf_if_available(detail_link: str) -> str:
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(
-            headless=False,
+            # headless=False,
+            headless=True,
             args=["--no-sandbox"]
         )
         page = await browser.new_page()
