@@ -1,0 +1,32 @@
+@startuml
+
+left to right direction
+
+!include <awslib/AWSCommon>
+!include <awslib/AWSSimplified.puml>
+!include <awslib/general/all.puml>
+
+!include <awslib/Groups/AWSCloud>
+!include <awslib/Compute/Lambda>
+
+
+actor "User" as User
+AWSCloudGroup(cloud) {
+    Lambda(Agent, "Strands Agent", "")
+
+    package "@strands.tool" {
+        rectangle "Tool #2: calculator()" as Calculator #lightgray
+        rectangle "Tool #1: current_time()" as CurrentTime #lightgray
+        rectangle "Tool #3: letter_counter()" as LetterCounter
+    }
+    rectangle "Amazon Bedrock LLMs" as bedrock
+}
+
+User --> Agent : User question
+User <-- Agent : Agent response
+Agent <--> bedrock
+Agent <--> CurrentTime : task
+Agent <--> Calculator : task
+Agent <--> LetterCounter : task
+
+@enduml

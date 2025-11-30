@@ -22,19 +22,13 @@ def letter_counter(word: str, letter: str) -> int:
 
     return word.lower().count(letter.lower())
 
-# Create an agent with tools from the community-driven strands-tools package
-# as well as our custom letter_counter tool
-agent = Agent(
-    model="amazon.nova-pro-v1:0",
-    tools=[calculator, current_time, letter_counter]
-)
+def run_agent(message: str):
 
-# Ask the agent a question that uses the available tools
-message = """
-I have 3 requests:
+    # Create an agent with tools from the community-driven strands-tools package
+    # as well as our custom letter_counter tool
+    agent = Agent(
+        model="amazon.nova-pro-v1:0",
+        tools=[calculator, current_time, letter_counter]
+    )
 
-1. What is the time right now?
-2. Calculate 3111696 / 74088
-3. Tell me how many letter R's are in the word "strawberry"
-"""
-agent(message)
+    agent(message)
