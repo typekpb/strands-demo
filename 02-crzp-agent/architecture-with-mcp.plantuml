@@ -21,6 +21,10 @@ package "Local environment" {
     }
 }
 
+package "Internet" {
+    rectangle "https://opac.crzp.sk/" as crzp
+}
+
 AWSCloudGroup(cloud) {
     rectangle "Amazon Bedrock LLMs" as bedrock
 }
@@ -31,5 +35,9 @@ Agent <--> fetch : task
 Agent <--> abstract_fetch : task
 Agent <--> pdf_fetch : task
 Agent <--> mcp : task
+
+fetch --> crzp
+abstract_fetch --> crzp
+pdf_fetch --> crzp
 
 @enduml
