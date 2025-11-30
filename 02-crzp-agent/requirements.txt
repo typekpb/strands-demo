@@ -5,3 +5,5 @@ hypothesis>=6.82.0
 requests>=2.31.0
 playwright>=1.44.0
 asyncio
+mcp>=1.22.0
+pymupdf4llm-mcp>=0.0.4

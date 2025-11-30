@@ -1,7 +1,9 @@
 """Main entry point for the Thesis Search Assistant."""
 
 from strands import Agent
-
+from mcp import stdio_client, StdioServerParameters
+from strands.tools.mcp import MCPClient
+from mcp_pdf_server import MCPPdfServer
 from czrp_scraper import thesis_fetch, thesis_abstract_fetch, thesis_retrieve_pdf_if_available
 
 
@@ -97,21 +99,40 @@ Important Guidelines:
 
 Error Handling:
 - If you cannot find specific information, be honest with the user"""
-    
-    # Initialize Agent with Amazon Nova Pro model and http_request tool
-    # The strands.Agent handles AWS Bedrock authentication automatically
-    # using credentials from ~/.aws/credentials or ~/.aws/config
-    agent = Agent(
-        model="amazon.nova-pro-v1:0",
-        tools=[thesis_fetch, thesis_abstract_fetch, thesis_retrieve_pdf_if_available],
-        system_prompt=system_prompt
+
+    # start mcp pdf server
+    server = MCPPdfServer()
+    server.start()
+
+    # initialize mcp client
+    pdf_mcp_client = MCPClient(
+        lambda: stdio_client(
+            StdioServerParameters(
+                command="uvx",
+                args=["pymupdf4llm-mcp@latest", "stdio"]
+            )
+        )
     )
-    
-    print("\nAssistant initialized successfully!")
-    print("Ready to help you search for theses.\n")
-    
-    # Start conversation loop
-    run_conversation_loop(agent)
+
+    # Manual lifecycle management
+    with pdf_mcp_client:
+        # Get the tools from the MCP server
+        mcp_tools = pdf_mcp_client.list_tools_sync()
+
+        # Initialize Agent with Amazon Nova Pro model and http_request tool
+        # The strands.Agent handles AWS Bedrock authentication automatically
+        # using credentials from ~/.aws/credentials or ~/.aws/config
+        agent = Agent(
+            model="amazon.nova-pro-v1:0",
+            tools=[thesis_fetch, thesis_abstract_fetch, thesis_retrieve_pdf_if_available, mcp_tools],
+            system_prompt=system_prompt
+        )
+
+        print("\nAssistant initialized successfully!")
+        print("Ready to help you search for theses.\n")
+
+        # Start conversation loop
+        run_conversation_loop(agent)
 
 
 if __name__ == "__main__":
