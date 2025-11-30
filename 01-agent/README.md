@@ -1,6 +1,7 @@
 # Run locally
 ```shell
  .venv/bin/pip install -r requirements.txt
+ source .venv/bin/activate && python -m local.py
 ```
 
 # Run in AWS
