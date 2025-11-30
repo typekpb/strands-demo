@@ -2,7 +2,7 @@
 
 from strands import Agent
 
-from czrp_scraper import thesis_fetch
+from czrp_scraper import thesis_fetch, thesis_abstract_fetch, thesis_retrieve_pdf_if_available
 
 
 def display_welcome_message():
@@ -103,7 +103,7 @@ Error Handling:
     # using credentials from ~/.aws/credentials or ~/.aws/config
     agent = Agent(
         model="amazon.nova-pro-v1:0",
-        tools=[thesis_fetch],
+        tools=[thesis_fetch, thesis_abstract_fetch, thesis_retrieve_pdf_if_available],
         system_prompt=system_prompt
     )
     
