@@ -124,7 +124,9 @@ Error Handling:
         # using credentials from ~/.aws/credentials or ~/.aws/config
         agent = Agent(
             model="amazon.nova-pro-v1:0",
-            tools=[thesis_fetch, thesis_abstract_fetch, thesis_retrieve_pdf_if_available, mcp_tools],
+            tools=[thesis_fetch, thesis_abstract_fetch, thesis_retrieve_pdf_if_available,
+                   mcp_tools
+                   ],
             system_prompt=system_prompt
         )
 
