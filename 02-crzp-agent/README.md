@@ -2,11 +2,7 @@
 
 1. Launch the `main.py`
 1. 
-    INPUT:
-    ```
-    search for thesis for keyword: "analyza legislativy pre autonomne vozidla" in CZRP and show me the abstract
-    ```
-
+    INPUT: `search for thesis for keyword: "analyza legislativy pre autonomne vozidla" in CZRP and show me the abstract`
     OUTPUT:
     ```
     <thinking> To find the thesis with the keyword "analyza legislativy pre autonomne vozidla" in the CZRP repository, I will use the `thesis_fetch` tool. Once I have the thesis details, I will use the `thesis_abstract_fetch` tool to retrieve the abstract. </thinking>
@@ -24,7 +20,7 @@
 
     Potenciálnym nástupcom dnešných,
     ```
-1. INPUT: `show me the levels of autonomy described in the thesis`
+1. INPUT: `show me the levels of autonomy described in the thesis (it might be retrievable from the thesis pdf only)`
    OUTPUT (pdf reader unavailable):
    ```
    <thinking> Since I cannot directly read or analyze PDF files, I need to inform the user that I cannot provide the levels of autonomy described in the thesis. I will suggest that the user download the PDF to review it themselves. </thinking>
