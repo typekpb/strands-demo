@@ -1,0 +1,43 @@
+@startuml
+
+left to right direction
+
+!include <awslib/AWSCommon>
+!include <awslib/AWSSimplified.puml>
+!include <awslib/general/all.puml>
+
+!include <awslib/Groups/AWSCloud>
+
+actor "User" as User
+package "Local environment" {
+    rectangle "Strands Agent" as Agent
+    package "@strands.tool" {
+        rectangle "Tool #1: thesis_fetch()" as fetch
+        rectangle "Tool #2: thesis_abstract_fetch()" as abstract_fetch
+        rectangle "Tool #3: thesis_retrieve_pdf_if_available()" as pdf_fetch
+    }
+    package "MCP Server" {
+        rectangle "Tool #4: convert_pdf_to_markdown" as mcp #lightgray
+    }
+}
+
+package "Internet" {
+    rectangle "https://opac.crzp.sk/" as crzp
+}
+
+AWSCloudGroup(cloud) {
+    rectangle "Amazon Bedrock LLMs" as bedrock
+}
+User --> Agent : User question
+User <-- Agent : Agent response
+Agent <--> bedrock
+Agent <--> fetch : task
+Agent <--> abstract_fetch : task
+Agent <--> pdf_fetch : task
+Agent <--> mcp : task
+
+fetch --> crzp
+abstract_fetch --> crzp
+pdf_fetch --> crzp
+
+@enduml
